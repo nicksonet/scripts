@@ -27,20 +27,31 @@ iptables -t filter -A INPUT -p tcp -s 46.4.80.103 --dport 22 -j ACCEPT
 iptables -t filter -A INPUT -p tcp -s 144.76.106.232 --dport 22 -j ACCEPT
 iptables -t filter -A INPUT -p tcp -s 31.44.84.134 -j ACCEPT  #office ip1
 iptables -t filter -A INPUT -p tcp -s 31.44.84.135 -j ACCEPT  #office ip2
-iptables -t filter -A INPUT -p tcp -s 109.95.212.132 -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 109.95.212.133 -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 109.95.212.134 -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 109.95.212.135 -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 109.95.212.136 -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 109.95.212.137 -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 109.95.212.138 -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 109.95.212.139 -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 109.95.211.42  -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 109.95.211.40  -j ACCEPT
-iptables -t filter -A INPUT -p tcp -s 176.9.49.234   -j ACCEPT
+iptables -t filter -A INPUT -p tcp -s 83.69.207.252 -j ACCEPT  #backup.medbooking.com
+
+
+iptables -t filter -A INPUT -p tcp -s 109.95.212.132 -j ACCEPT #testpuls.ru 
+iptables -t filter -A INPUT -p tcp -s 109.95.212.133 -j ACCEPT #sprosiservice.ru
+iptables -t filter -A INPUT -p tcp -s 109.95.212.134 -j ACCEPT #crm.medbooking.com
+iptables -t filter -A INPUT -p tcp -s 109.95.212.135 -j ACCEPT #
+iptables -t filter -A INPUT -p tcp -s 109.95.212.136 -j ACCEPT #call.medbooking.com
+iptables -t filter -A INPUT -p tcp -s 109.95.212.137 -j ACCEPT #medbooking.com
+iptables -t filter -A INPUT -p tcp -s 109.95.212.138 -j ACCEPT #db1.medbooking.com
+iptables -t filter -A INPUT -p tcp -s 109.95.212.139 -j ACCEPT #db2.medbooking.com
+iptables -t filter -A INPUT -p tcp -s 109.95.211.42  -j ACCEPT #node1
+iptables -t filter -A INPUT -p tcp -s 109.95.211.40  -j ACCEPT #node2
+iptables -t filter -A INPUT -p tcp -s 176.9.49.234   -j ACCEPT #backup slave | sandbox
 iptables -t filter -A INPUT -p tcp -s 109.95.211.182 -j ACCEPT
 iptables -t filter -A INPUT -p tcp -s 95.165.131.220 -j ACCEPT #system administrator
-#62.76.13.176
+iptables -t filter -A INPUT -p tcp -s 83.69.207.254  -j ACCEPT #dev.medbooking.com
+iptables -t filter -A INPUT -p tcp -s 109.95.211.182 -j ACCEPT #zumber.ru 
+iptables -t filter -A INPUT -p tcp -s 176.9.37.235   -j ACCEPT #ansible
+
+iptables -t filter -A INPUT -p tcp -s 172.14.200.0/24 -j ACCEPT
+iptables -t filter -A INPUT -p tcp -s 172.15.200.0/24 -j ACCEPT
+iptables -t filter -A INPUT -p tcp -s 172.16.200.0/24 -j ACCEPT
+iptables -t filter -A INPUT -p tcp -s 172.17.200.0/24 -j ACCEPT
+iptables -t filter -A INPUT -p tcp -s 172.20.200.0/24 -j ACCEPT
 # DNS
 iptables -t filter -A INPUT -p tcp --dport 53 -j ACCEPT
 iptables -t filter -A INPUT -p udp --dport 53 -j ACCEPT
@@ -95,7 +106,7 @@ iptables -t filter -A INPUT -p tcp -s 107.23.195.228 --dport 3309 -j ACCEPT
 iptables -t filter -A INPUT -p tcp -s 54.236.224.46 --dport 3309 -j ACCEPT
 
 #ZABBIX
-#iptables -t filter -A INPUT -p tcp --dport 10050 -j ACCEPT
+iptables -t filter -A INPUT -p tcp --dport 10050 -j ACCEPT
 
 # FTP
 #iptables -t filter -A INPUT -p tcp --dport 20:21 -j ACCEPT
