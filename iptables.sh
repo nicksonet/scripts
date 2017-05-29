@@ -4,6 +4,9 @@
 iptables -t filter -F
 iptables -t filter -X
 
+#Forwarding
+iptables -I FORWARD -j ACCEPT
+
 # Bloc everything by default
 iptables -t filter -P INPUT DROP
 iptables -t filter -P FORWARD ACCEPT
@@ -30,14 +33,19 @@ iptables -t filter -A INPUT -p tcp -s 31.44.84.135 -j ACCEPT  #office ip2
 iptables -t filter -A INPUT -p tcp -s 83.69.207.252 -j ACCEPT  #backup.medbooking.com
 
 
-iptables -t filter -A INPUT -p tcp -s 109.95.212.132 -j ACCEPT #testpuls.ru 
+iptables -t filter -A INPUT -p tcp -s 109.95.212.132 -j ACCEPT #testpuls.ru
 iptables -t filter -A INPUT -p tcp -s 109.95.212.133 -j ACCEPT #sprosiservice.ru
 iptables -t filter -A INPUT -p tcp -s 109.95.212.134 -j ACCEPT #crm.medbooking.com
 iptables -t filter -A INPUT -p tcp -s 109.95.212.135 -j ACCEPT #
 iptables -t filter -A INPUT -p tcp -s 109.95.212.136 -j ACCEPT #call.medbooking.com
 iptables -t filter -A INPUT -p tcp -s 109.95.212.137 -j ACCEPT #medbooking.com
-iptables -t filter -A INPUT -p tcp -s 109.95.212.138 -j ACCEPT #db1.medbooking.com
 iptables -t filter -A INPUT -p tcp -s 109.95.212.139 -j ACCEPT #db2.medbooking.com
+
+iptables -t filter -A INPUT -p tcp -s 88.198.19.201  -j ACCEPT #ast-02
+iptables -t filter -A INPUT -p tcp -s 109.95.212.138 -j ACCEPT #ast-01
+
+
+
 iptables -t filter -A INPUT -p tcp -s 109.95.211.42  -j ACCEPT #node1
 iptables -t filter -A INPUT -p tcp -s 109.95.211.40  -j ACCEPT #node2
 iptables -t filter -A INPUT -p tcp -s 176.9.49.234   -j ACCEPT #backup slave | sandbox
@@ -52,6 +60,7 @@ iptables -t filter -A INPUT -p tcp -s 172.15.200.0/24 -j ACCEPT
 iptables -t filter -A INPUT -p tcp -s 172.16.200.0/24 -j ACCEPT
 iptables -t filter -A INPUT -p tcp -s 172.17.200.0/24 -j ACCEPT
 iptables -t filter -A INPUT -p tcp -s 172.20.200.0/24 -j ACCEPT
+iptables -t filter -A INPUT -p tcp -s 192.168.122.0/24 -j ACCEPT
 # DNS
 iptables -t filter -A INPUT -p tcp --dport 53 -j ACCEPT
 iptables -t filter -A INPUT -p udp --dport 53 -j ACCEPT
@@ -114,4 +123,16 @@ iptables -t filter -A INPUT -p tcp --dport 10050 -j ACCEPT
 # Mail SMTP
 iptables -t filter -A INPUT -p tcp --dport 25 -j ACCEPT
 iptables -t filter -A OUTPUT -p tcp --dport 25 -j ACCEPT
+
+#NAT Translation SlaveDB1
+iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 2201 -j DNAT --to-destination 192.168.122.2:22
+iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 3307 -j DNAT --to-destination 192.168.122.2:3306
+
+#NAT Translation SlaveDB2
+iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 2202 -j DNAT --to-destination 192.168.122.3:22
+iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 3308 -j DNAT --to-destination 192.168.122.3:3306
+
+#NAT Translation Stat
+iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 2203 -j DNAT --to-destination 192.168.122.4:22
+iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 3309 -j DNAT --to-destination 192.168.122.4:3306
 
