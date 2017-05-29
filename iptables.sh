@@ -127,12 +127,17 @@ iptables -t filter -A OUTPUT -p tcp --dport 25 -j ACCEPT
 #NAT Translation SlaveDB1
 iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 2201 -j DNAT --to-destination 192.168.122.2:22
 iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 3307 -j DNAT --to-destination 192.168.122.2:3306
+iptables -t nat -I POSTROUTING -p tcp -s 192.168.122.2 --sport 22 -j SNAT --to-source 176.9.37.235:2201
+iptables -t nat -I POSTROUTING -p tcp -s 192.168.122.2 --sport 3306 -j SNAT --to-source 176.9.37.235:3306
 
 #NAT Translation SlaveDB2
 iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 2202 -j DNAT --to-destination 192.168.122.3:22
 iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 3308 -j DNAT --to-destination 192.168.122.3:3306
+iptables -t nat -I POSTROUTING -p tcp -s 192.168.122.3 --sport 22 -j SNAT --to-source 176.9.37.235:2202
+iptables -t nat -I POSTROUTING -p tcp -s 192.168.122.3 --sport 3306 -j SNAT --to-source 176.9.37.235:3307
 
 #NAT Translation Stat
 iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 2203 -j DNAT --to-destination 192.168.122.4:22
-iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 3309 -j DNAT --to-destination 192.168.122.4:3306
-
+iptables -t nat -I PREROUTING -p tcp -d 176.9.37.235 --dport 3308 -j DNAT --to-destination 192.168.122.4:3306
+iptables -t nat -I POSTROUTING -p tcp -s 192.168.122.3 --sport 22 -j SNAT --to-source 176.9.37.235:2203
+iptables -t nat -I POSTROUTING -p tcp -s 192.168.122.3 --sport 3306 -j SNAT --to-source 176.9.37.235:3308
